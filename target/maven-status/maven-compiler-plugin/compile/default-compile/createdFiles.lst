@@ -1,2 +1,3 @@
 org/angelika/encoder/FileEncoder.class
+org/angelika/encoder/ImageCropComponent.class
 org/angelika/encoder/WebEncoder.class

@@ -5,13 +5,9 @@
  */
 package org.angelika.encoder;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,10 +16,9 @@ import java.util.logging.Logger;
  * @author angie
  */
 public class FileEncoder {
+    private final String fileResourcesPath = "drawing/bialystok_map.png";
 
-    private final String fileName = "drawing/bialystok.jpg";
-
-    private String encodeImageToBase64Binary(File file) {
+    String encodeImageToBase64Binary(File file) {
         String encodedfile = null;
         try {
             FileInputStream fileInputStreamReader = new FileInputStream(file);
@@ -31,17 +26,21 @@ public class FileEncoder {
             fileInputStreamReader.read(bytes);
             byte[] encodedBytes = java.util.Base64.getEncoder().encode(bytes);
             encodedfile = new String(encodedBytes);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger(FileEncoder.class.getName()).log(Level.WARNING, "File not found.", e);
         }
         return encodedfile;
     }
 
     public File getFileFromResources() {
         ClassLoader classLoader = getClass().getClassLoader();
-	File file = new File(classLoader.getResource(fileName).getFile());
+        File file = new File(classLoader.getResource(fileResourcesPath).getFile());
+        return file;
+    }
+
+    public File getNewFile() {
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource("*/bialystok_new.png").getFile());
         return file;
     }
 }
