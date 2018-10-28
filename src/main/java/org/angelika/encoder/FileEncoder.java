@@ -37,10 +37,4 @@ public class FileEncoder {
         File file = new File(classLoader.getResource(fileResourcesPath).getFile());
         return file;
     }
-
-    public File getNewFile() {
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("*/bialystok_new.png").getFile());
-        return file;
-    }
 }

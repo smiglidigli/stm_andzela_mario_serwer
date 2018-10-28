@@ -32,7 +32,7 @@ public class WebEncoder {
     public String getBinaryImage(@WebParam(name = "i") String i) {
         FileEncoder encoder = new FileEncoder();
         File orginalFile = encoder.getFileFromResources();
-        
+
         String encodedFile = encoder.encodeImageToBase64Binary(orginalFile);
         return encodedFile;
     }
@@ -51,13 +51,11 @@ public class WebEncoder {
         } catch (IOException ex) {
             Logger.getLogger(WebEncoder.class.getName()).log(Level.SEVERE, "Coudn't read file.", ex);
         }
-        
-        //BufferedImage dst = new BufferedImage(x2, y2, BufferedImage.TYPE_INT_ARGB);
-        //dst.getGraphics().drawImage(image, 0, 0, x2, y2, x1, y1, x1 + x2, y1 + y2, null);
+
         ImageCropComponent imageComponent = new ImageCropComponent();
         BufferedImage bufferedImage = imageComponent.cropImage(image, x1, y1, x2, y2);
-                
-        File croppedFile = new File("/Users/angie/Downloads/bialystok_new.png");
+
+        File croppedFile = new File("*/bialystok_new.png");
         try {
             ImageIO.write(bufferedImage, "png", croppedFile);
         } catch (IOException ex) {
