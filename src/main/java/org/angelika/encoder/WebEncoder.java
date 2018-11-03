@@ -21,27 +21,19 @@ import javax.imageio.ImageIO;
  *
  * @author angie
  */
+//@WebService(serviceName = "ImageEncoder", targetNamespace = "http://localhost:8080/ImageEncoder/WebEncoder?wsdl")
 @WebService(serviceName = "ImageEncoder")
 @Stateless()
 public class WebEncoder {
 
-    /**
-     * Web service operation
-     */
-    @WebMethod(operationName = "getBinaryImage")
-    public String getBinaryImage(@WebParam(name = "i") String i) {
-        FileEncoder encoder = new FileEncoder();
-        File orginalFile = encoder.getFileFromResources();
-
-        String encodedFile = encoder.encodeImageToBase64Binary(orginalFile);
-        return encodedFile;
-    }
 
     /**
      * Web service operation
+     * @param x1
      */
     @WebMethod(operationName = "crop")
-    public String crop(@WebParam(name = "x1") Integer x1, @WebParam(name = "x2") Integer x2, @WebParam(name = "y1") Integer y1, @WebParam(name = "y2") Integer y2) {
+    public String crop(@WebParam(name = "x1") double x1, @WebParam(name = "x2") double x2, @WebParam(name = "y1") double y1, @WebParam(name = "y2") double y2) {
+      
         FileEncoder encoder = new FileEncoder();
         File orginalFile = encoder.getFileFromResources();
 
@@ -53,15 +45,28 @@ public class WebEncoder {
         }
 
         ImageCropComponent imageComponent = new ImageCropComponent();
-        BufferedImage bufferedImage = imageComponent.cropImage(image, x1, y1, x2, y2);
-
-        File croppedFile = new File("*/bialystok_new.png");
+        BufferedImage bufferedImage = imageComponent.cropImage(image, (int) x1, (int) y1,(int) x2, (int) y2);
+                
+        File croppedFile = new File("/Users/angie/Downloads/bialystok_new.png");
         try {
             ImageIO.write(bufferedImage, "png", croppedFile);
         } catch (IOException ex) {
             Logger.getLogger(WebEncoder.class.getName()).log(Level.SEVERE, "Coudn't write file.", ex);
         }
         String encodedFile = encoder.encodeImageToBase64Binary(croppedFile);
+        return encodedFile;
+       
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "getBinaryImage")
+    public String getBinaryImage() {
+        FileEncoder encoder = new FileEncoder();
+        File orginalFile = encoder.getFileFromResources();
+        
+        String encodedFile = encoder.encodeImageToBase64Binary(orginalFile);
         return encodedFile;
     }
 }
