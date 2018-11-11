@@ -21,28 +21,25 @@ public class ImageCropComponent {
     }
 
     public int convertLatitudeDegreesToPixels(double degrees) {
-        double centerLatitude = 53.1320;
+        double centerLatitude = 53.135650;
         int pixels;
-        if (degrees > centerLatitude) {
-            double difference = degrees - centerLatitude;
-            pixels = (int) (500 + (9 * difference / 0.0001));
-        } else {
+        if (degrees <= centerLatitude) {
             double difference = centerLatitude - degrees;
-            pixels = (int) (500 - (9 * difference / 0.0001));
+            pixels = (int) (1000 * difference / 0.006453);
+        } else {
+            throw new RuntimeException("Latitude should be less then " + centerLatitude);
         }
-
         return pixels;
     }
 
     public int convertLongitudeDegreesToPixels(double degrees) {
-        double centerLongitude = 23.1513;
+        double centerLongitude = 23.145682;
         int pixels;
-              if (degrees > centerLongitude) {
+        if (degrees >= centerLongitude) {
             double difference = degrees - centerLongitude;
-            pixels = (int) (500 + (9 * difference / 0.0001));
+            pixels = (int) (1000*difference/0.010708);
         } else {
-            double difference = centerLongitude - degrees;
-            pixels = (int) (500 - (9 * difference / 0.0001));
+            throw new RuntimeException("Longitude should be more then " + centerLongitude);
         }
         return pixels;
     }
