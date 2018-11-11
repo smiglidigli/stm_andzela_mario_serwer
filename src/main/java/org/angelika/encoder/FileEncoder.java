@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * @author angie
  */
 public class FileEncoder {
-    private final String fileResourcesPath = "drawing/bialystok_map.png";
+    private final String fileResourcesPath = "drawing/center.png";
 
     String encodeImageToBase64Binary(File file) {
         String encodedfile = null;

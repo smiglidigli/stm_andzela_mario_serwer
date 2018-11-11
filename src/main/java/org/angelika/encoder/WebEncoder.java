@@ -45,9 +45,15 @@ public class WebEncoder {
         }
 
         ImageCropComponent imageComponent = new ImageCropComponent();
-        BufferedImage bufferedImage = imageComponent.cropImage(image, (int) x1, (int) y1,(int) x2, (int) y2);
+        int firstLat = imageComponent.convertLatitudeDegreesToPixels(x1);
+        int secLat = imageComponent.convertLatitudeDegreesToPixels(x2);
+
+        int firstLong = imageComponent.convertLongitudeDegreesToPixels(y1);
+        int secLong = imageComponent.convertLongitudeDegreesToPixels(y2);
+        
+        BufferedImage bufferedImage = imageComponent.cropImage(image, firstLat, firstLong,secLat, secLong);
                 
-        File croppedFile = new File("/Users/angie/Downloads/bialystok_new.png");
+        File croppedFile = new File("/Users/angie/Downloads/center.png");
         try {
             ImageIO.write(bufferedImage, "png", croppedFile);
         } catch (IOException ex) {
