@@ -14,33 +14,23 @@ import java.awt.image.BufferedImage;
  */
 public class ImageCropComponent {
 
-    public BufferedImage cropImage(Image image, int firstCordX, int firstCordY, int secondCordX, int secondCordY) {
-        BufferedImage bufferedImage = new BufferedImage(secondCordX, secondCordY, BufferedImage.TYPE_INT_ARGB);
-        bufferedImage.getGraphics().drawImage(image, 0, 0, secondCordX, secondCordY, firstCordX, firstCordY, firstCordX + secondCordX, firstCordY + secondCordY, null);
+    private static final double MIN_X = 53.129281;
+    private static final double MIN_Y = 23.145682;
+    private static final double MAX_X = 53.135650;
+    private static final double MAX_Y = 23.156369;
+    
+     public BufferedImage cropImage(Image image, int[] pixels) {
+        BufferedImage bufferedImage = new BufferedImage(pixels[1], pixels[3], BufferedImage.TYPE_INT_ARGB);
+        bufferedImage.getGraphics().drawImage(image, 0, 0, pixels[1], pixels[3], pixels[0], pixels[2], pixels[0] + pixels[1], pixels[2] + pixels[3], null);
         return bufferedImage;
     }
 
-    public int convertLatitudeDegreesToPixels(double degrees) {
-        double centerLatitude = 53.135650;
-        int pixels;
-        if (degrees <= centerLatitude) {
-            double difference = centerLatitude - degrees;
-            pixels = (int) (1000 * difference / 0.006453);
-        } else {
-            throw new RuntimeException("Latitude should be less then " + centerLatitude);
-        }
-        return pixels;
-    }
-
-    public int convertLongitudeDegreesToPixels(double degrees) {
-        double centerLongitude = 23.145682;
-        int pixels;
-        if (degrees >= centerLongitude) {
-            double difference = degrees - centerLongitude;
-            pixels = (int) (1000*difference/0.010708);
-        } else {
-            throw new RuntimeException("Longitude should be more then " + centerLongitude);
-        }
-        return pixels;
+    public int[] getPixelsFromCoordinates(double[] coords) {
+        int[] outputPixels = new int[4];
+        outputPixels[0] = (int) (1000 * (MAX_X - coords[0]) / (MAX_X - MIN_X));
+        outputPixels[1] = (int) (1000 * (MAX_X - coords[1]) / (MAX_X - MIN_X));
+        outputPixels[2] = (int) (1000 * (coords[2] - MIN_Y) / (MAX_Y - MIN_Y));
+        outputPixels[3] = (int) (1000 * (coords[3] - MIN_Y) / (MAX_Y - MIN_Y));
+        return outputPixels;
     }
 }

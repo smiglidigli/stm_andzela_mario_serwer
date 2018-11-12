@@ -21,7 +21,6 @@ import javax.imageio.ImageIO;
  *
  * @author angie
  */
-//@WebService(serviceName = "ImageEncoder", targetNamespace = "http://localhost:8080/ImageEncoder/WebEncoder?wsdl")
 @WebService(serviceName = "ImageEncoder")
 @Stateless()
 public class WebEncoder {
@@ -45,15 +44,12 @@ public class WebEncoder {
         }
 
         ImageCropComponent imageComponent = new ImageCropComponent();
-        int firstLat = imageComponent.convertLatitudeDegreesToPixels(x1);
-        int secLat = imageComponent.convertLatitudeDegreesToPixels(x2);
-
-        int firstLong = imageComponent.convertLongitudeDegreesToPixels(y1);
-        int secLong = imageComponent.convertLongitudeDegreesToPixels(y2);
         
-        BufferedImage bufferedImage = imageComponent.cropImage(image, firstLat, firstLong,secLat, secLong);
+        double[] coords = new double[]{x1,x2,y1,y2};
+        int[] pixels = imageComponent.getPixelsFromCoordinates(coords);
+        BufferedImage bufferedImage = imageComponent.cropImage(image, pixels);
                 
-        File croppedFile = new File("/Users/angie/Downloads/center.png");
+        File croppedFile = new File("/***/center.png");
         try {
             ImageIO.write(bufferedImage, "png", croppedFile);
         } catch (IOException ex) {
@@ -61,7 +57,6 @@ public class WebEncoder {
         }
         String encodedFile = encoder.encodeImageToBase64Binary(croppedFile);
         return encodedFile;
-       
     }
 
     /**
