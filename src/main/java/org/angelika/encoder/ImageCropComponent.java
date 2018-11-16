@@ -14,14 +14,14 @@ import java.awt.image.BufferedImage;
  */
 public class ImageCropComponent {
 
-    private static final double MIN_X = 53.129281;
-    private static final double MIN_Y = 23.145682;
-    private static final double MAX_X = 53.135650;
-    private static final double MAX_Y = 23.156369;
+    private static final double MIN_X = 53.129281;//right point
+    private static final double MIN_Y = 23.145682;//left point
+    private static final double MAX_X = 53.135650;//left point
+    private static final double MAX_Y = 23.156369;//right point
     
      public BufferedImage cropImage(Image image, int[] pixels) {
-        BufferedImage bufferedImage = new BufferedImage(pixels[1], pixels[3], BufferedImage.TYPE_INT_ARGB);
-        bufferedImage.getGraphics().drawImage(image, 0, 0, pixels[1], pixels[3], pixels[0], pixels[2], pixels[0] + pixels[1], pixels[2] + pixels[3], null);
+        BufferedImage bufferedImage = new BufferedImage(pixels[3]-pixels[2],pixels[1]-pixels[0], BufferedImage.TYPE_INT_ARGB);
+        bufferedImage.getGraphics().drawImage(image, 0, 0, pixels[3]-pixels[2],pixels[1]-pixels[0],pixels[2] ,pixels[0] ,pixels[3] ,pixels[1] , null);
         return bufferedImage;
     }
 
