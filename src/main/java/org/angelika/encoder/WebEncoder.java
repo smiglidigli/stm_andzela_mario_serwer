@@ -49,7 +49,7 @@ public class WebEncoder {
         int[] pixels = imageComponent.getPixelsFromCoordinates(coords);
         BufferedImage bufferedImage = imageComponent.cropImage(image, pixels);
                 
-        File croppedFile = new File("/Users/angie/Downloads/center.png");
+        File croppedFile = new File("C:\\Users\\m\\Downloads\\center.png");
         try {
             ImageIO.write(bufferedImage, "png", croppedFile);
         } catch (IOException ex) {
